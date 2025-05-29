@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 
-const x = 21;
 const app = express();
 
 app.use((req, res, next) => {
