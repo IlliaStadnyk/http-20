@@ -7,6 +7,8 @@ app.engine('hbs', hbs({ extname: 'hbs', layoutsDir: './views/layouts', defaultLa
 app.set('view engine', 'hbs');
 
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -22,6 +24,18 @@ app.get('/about', (req, res) => {
 
 app.get('/contact', (req, res) => {
     res.render('contact');
+});
+app.post('/contact/send-message', (req, res) => {
+
+    const { author, sender, title, message, file } = req.body;
+
+    if(author && sender && title && message && file) {
+        res.render('contact', { filename: file, isSent: true });
+    }
+    else {
+        res.render('contact', { isError: true });
+    }
+
 });
 
 app.get('/info', (req, res) => {
